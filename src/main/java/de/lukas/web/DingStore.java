@@ -19,12 +19,16 @@ public class DingStore {
     return dinge.values();
   }
 
-  public final Ding get(final int id) {
+  public Ding get(final int id) {
     return dinge.get(Integer.valueOf(id));
   }
 
   public void put(final Ding ding) {
     dinge.put(ding.getId(), ding);
+  }
+
+  public void remove(final int id) {
+	dinge.remove(Integer.valueOf(id));
   }
 
 }

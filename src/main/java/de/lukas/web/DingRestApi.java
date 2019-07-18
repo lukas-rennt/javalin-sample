@@ -5,14 +5,22 @@ import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.path;
 import static io.javalin.apibuilder.ApiBuilder.put;
 
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
+
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
 public class DingRestApi {
 
+  private final static Logger LOGGER = Logger.getLogger(DingRestApi.class.getCanonicalName());
+
   private final static DingStore dingStore = DingStore.INSTANCE;
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws Exception {
+    LogManager.getLogManager()
+        .readConfiguration(DingRestApi.class.getClassLoader().getResourceAsStream("logging.properties"));
+
     final Javalin app = Javalin.create().start(7000);
 
     app.routes(() -> {
@@ -33,6 +41,8 @@ public class DingRestApi {
   }
 
   private static void getDinge(final Context ctx) {
+    LOGGER.info(() -> "Hallo");
+
     ctx.json(dingStore.getAll());
   }
 

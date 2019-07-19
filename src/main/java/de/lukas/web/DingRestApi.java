@@ -15,28 +15,19 @@ import io.javalin.http.Context;
 
 public class DingRestApi {
 
-  static {
-    try {
-      Logger.getAnonymousLogger().info(() -> "before logging configuration");
-      LogManager.getLogManager().readConfiguration(new FileInputStream("/etc/javalin-sample/conf/logging.properties"));
-      Logger.getAnonymousLogger().info(() -> "after logging configuration");
-    } catch (final IOException e) {
-      Logger.getAnonymousLogger().warning(() -> "logging configuration failed; " + e.getMessage());
-    }
-
-    LOGGER = Logger.getLogger(DingRestApi.class.getCanonicalName());
-
-//    LogManager.getLogManager()
-//        .readConfiguration(DingRestApi.class.getClassLoader().getResourceAsStream("logging.properties"));
-
-  }
-
-  private final static Logger LOGGER;
-//  private final static Logger LOGGER = Logger.getLogger(DingRestApi.class.getCanonicalName());
+  private final static Logger LOGGER = Logger.getLogger(DingRestApi.class.getCanonicalName());
 
   private final static DingStore dingStore = DingStore.INSTANCE;
 
   public static void main(String[] args) throws Exception {
+    try {
+//      LogManager.getLogManager()
+//          .readConfiguration(DingRestApi.class.getClassLoader().getResourceAsStream("logging.properties"));
+      LogManager.getLogManager().readConfiguration(new FileInputStream("/etc/javalin-sample/conf/logging.properties"));
+    } catch (final IOException e) {
+      Logger.getAnonymousLogger().warning(() -> "logging configuration failed; " + e.getMessage());
+    }
+
     final Javalin app = Javalin.create().start(7000);
 
     app.routes(() -> {

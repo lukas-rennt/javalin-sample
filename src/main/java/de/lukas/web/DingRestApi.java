@@ -46,7 +46,7 @@ public class DingRestApi {
   }
 
   private static void getDinge(final Context ctx) {
-    LOGGER.info(() -> "DingRestApi::getDinge");
+    LOGGER.info(() -> "getDinge");
     ctx.json(dingStore.getAll());
   }
 

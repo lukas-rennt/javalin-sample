@@ -15,22 +15,28 @@ import io.javalin.http.Context;
 
 public class DingRestApi {
 
-  private final static Logger LOGGER = Logger.getLogger(DingRestApi.class.getCanonicalName());
-
-  private final static DingStore dingStore = DingStore.INSTANCE;
-
-  public static void main(String[] args) throws Exception {
+  static {
     try {
-      LOGGER.info(() -> "before logging configuration");
+      Logger.getAnonymousLogger().info(() -> "before logging configuration");
       LogManager.getLogManager().readConfiguration(new FileInputStream("/etc/javalin-sample/conf/logging.properties"));
-      LOGGER.info(() -> "after logging configuration");
+      Logger.getAnonymousLogger().info(() -> "after logging configuration");
     } catch (final IOException e) {
-      LOGGER.warning(() -> "logging configuration failed; " + e.getMessage());
+      Logger.getAnonymousLogger().warning(() -> "logging configuration failed; " + e.getMessage());
     }
+
+    LOGGER = Logger.getLogger(DingRestApi.class.getCanonicalName());
 
 //    LogManager.getLogManager()
 //        .readConfiguration(DingRestApi.class.getClassLoader().getResourceAsStream("logging.properties"));
 
+  }
+
+  private final static Logger LOGGER;
+//  private final static Logger LOGGER = Logger.getLogger(DingRestApi.class.getCanonicalName());
+
+  private final static DingStore dingStore = DingStore.INSTANCE;
+
+  public static void main(String[] args) throws Exception {
     final Javalin app = Javalin.create().start(7000);
 
     app.routes(() -> {

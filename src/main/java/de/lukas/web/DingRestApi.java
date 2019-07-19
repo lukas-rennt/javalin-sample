@@ -21,11 +21,9 @@ public class DingRestApi {
 
   public static void main(String[] args) throws Exception {
     try {
-//      LogManager.getLogManager()
-//          .readConfiguration(DingRestApi.class.getClassLoader().getResourceAsStream("logging.properties"));
       LogManager.getLogManager().readConfiguration(new FileInputStream("/etc/javalin-sample/conf/logging.properties"));
     } catch (final IOException e) {
-      Logger.getAnonymousLogger().warning(() -> "logging configuration failed; " + e.getMessage());
+      LOGGER.warning(() -> "logging configuration failed; " + e.getMessage());
     }
 
     final Javalin app = Javalin.create().start(7000);

@@ -3,10 +3,11 @@
 #
 FROM maven:3.6-jdk-8-slim AS build
 WORKDIR /home/app
-COPY pom.xml /home/app
+COPY pom.xml .
+# see https://medium.com/@nieldw/caching-maven-dependencies-in-a-docker-build-dca6ca7ad612
 RUN mvn dependency:go-offline
-COPY src /home/app/src
-RUN mvn clean package
+COPY src ./src
+RUN mvn package
 
 #
 # Package stage

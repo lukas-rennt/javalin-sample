@@ -5,6 +5,8 @@ import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.path;
 import static io.javalin.apibuilder.ApiBuilder.put;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
@@ -18,8 +20,16 @@ public class DingRestApi {
   private final static DingStore dingStore = DingStore.INSTANCE;
 
   public static void main(String[] args) throws Exception {
-    LogManager.getLogManager()
-        .readConfiguration(DingRestApi.class.getClassLoader().getResourceAsStream("logging.properties"));
+    try {
+      LOGGER.info(() -> "before logging configuration");
+      LogManager.getLogManager().readConfiguration(new FileInputStream("/etc/javalin-sample/conf/logging.properties"));
+      LOGGER.info(() -> "after logging configuration");
+    } catch (final IOException e) {
+      LOGGER.warning(() -> "logging configuration failed; " + e.getMessage());
+    }
+
+//    LogManager.getLogManager()
+//        .readConfiguration(DingRestApi.class.getClassLoader().getResourceAsStream("logging.properties"));
 
     final Javalin app = Javalin.create().start(7000);
 

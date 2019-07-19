@@ -12,4 +12,5 @@ RUN mvn -f /home/app/pom.xml clean package
 FROM openjdk:8-jre-slim
 COPY --from=build /home/app/target/javalin-sample-complete.jar /usr/local/lib/javalin-sample-complete.jar
 EXPOSE 7000
+RUN mkdir -p /etc/javalin-sample/conf
 ENTRYPOINT ["java","-jar","/usr/local/lib/javalin-sample-complete.jar"]

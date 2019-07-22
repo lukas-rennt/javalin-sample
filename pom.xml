@@ -68,7 +68,7 @@
           <finalName>javalin-sample-complete</finalName>
           <archive>
             <manifest>
-              <mainClass>de.lukas.web.DingRestApi</mainClass>
+              <mainClass>de.lukas.web.DingApplication</mainClass>
             </manifest>
           </archive>
           <descriptorRefs>
